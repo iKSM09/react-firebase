@@ -1,11 +1,18 @@
-import "./App.css";
 import Auth from "./components/Auth.component";
+import CreateMovies from "./components/CreateMovies.component";
+
+import "./App.css";
+import Navigation from "./components/navigation/Navigation.component";
 
 const App = () => {
   return (
     <div>
-      <h1>Firebase</h1>
-      <Auth />
+      <Navigation />
+      <main>
+        <Auth />
+
+        <CreateMovies />
+      </main>
     </div>
   );
 };

@@ -1,0 +1,19 @@
+.navBar {
+  padding-block: var(--size-4);
+  padding-inline: var(--size-fluid-3);
+  background: var(--gray-12);
+  box-shadow: var(--shadow-3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  gap: var(--size-2);
+}
+
+.textCenter {
+  margin-block: auto 4px;
+}

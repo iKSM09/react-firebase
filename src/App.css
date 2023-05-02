@@ -1,3 +1,33 @@
+@custom-selector :--heading h1, h2, h3, h4, h5, h6;
+
+body {
+  background: var(--gradient-8);
+}
+
+main {
+  margin-inline: var(--size-fluid-6);
+
+  & > * {
+    margin-block: var(--size-6);
+  }
+}
+
+section {
+  margin-top: var(--size-4);
+}
+
+:--heading {
+  color: var(--teal-7);
+}
+
+h1 {
+  font-size: var(--font-size-fluid-3);
+}
+
+h2 {
+  font-size: var(--font-size-fluid-2);
+}
+
 button[color="blue"] {
   color: var(--blue-6);
   background-color: var(--blue-0);
@@ -9,28 +39,68 @@ button[color="blue"] {
   }
 }
 
-.just-for-gap {
-  display: grid;
-  gap: var(--size-4);
+.flex {
+  display: flex;
 }
 
-.flex {
-  margin: var(--size-7);
+.flex-between {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: var(--size-7);
+}
+
+.text-center {
+  align-self: center;
 }
 
 .flex-col {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   gap: var(--size-6);
+}
+
+.container > * {
+  margin-bottom: var(--size-1);
+  margin-inline: var(--size-fluid-8);
+}
+
+.input-area {
+  margin-block: var(--size-4);
+  padding: var(--size-4);
+  background-color: var(--gray-12);
+  display: flex;
+  justify-content: space-around;
+  border-radius: var(--radius-conditional-3);
+}
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--size-4);
 }
 
 .input_container {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 3fr;
   align-items: center;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  align-items: center;
+}
+
+input[type="checkbox"] {
+  margin-right: var(--size-2);
+}
+
+div:has(> input[type="checkbox"]) {
+  padding: var(--size-1) var(--size-2);
+  color: var();
+  background-color: var(--gray-10);
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-2);
 }
