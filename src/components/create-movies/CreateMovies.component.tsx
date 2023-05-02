@@ -26,6 +26,9 @@ const CreateMovies = () => {
   };
 
   const addMovie = async () => {
+    if (!newMovieTitle || !newReleaseDate) {
+      return alert("Please provide movie title and release date.");
+    }
     try {
       await addMovieDoc(newMovieTitle, newReleaseDate as number, isOscarWinner);
       setNewMovieTitle("");
