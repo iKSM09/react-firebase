@@ -1,16 +1,20 @@
-import Auth from "./components/Auth.component";
-import CreateMovies from "./components/CreateMovies.component";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "./utils/firebase/auth.utils";
+
+import Navigation from "./components/navigation/Navigation.component";
+import Auth from "./pages/Auth/Auth.page";
+import CreateMovies from "./components/create-movies/CreateMovies.component";
 
 import "./App.css";
-import Navigation from "./components/navigation/Navigation.component";
 
 const App = () => {
+  const [user] = useAuthState(auth);
+
   return (
     <div>
       <Navigation />
       <main>
-        <Auth />
-
+        {!user && <Auth />}
         <CreateMovies />
       </main>
     </div>

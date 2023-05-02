@@ -1,0 +1,26 @@
+.form_container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-6);
+}
+
+.formField {
+  display: grid;
+  grid-template-columns: 2fr 4fr;
+  align-items: start;
+
+  & > label {
+    padding-block: var(--size-1);
+  }
+}
+
+.input_container {
+  & > input {
+    width: 100%;
+    min-height: 100%;
+  }
+}
+
+.errorText {
+  color: var(--red-5);
+}

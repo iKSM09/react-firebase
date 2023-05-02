@@ -4,7 +4,8 @@ import {
   addMovieDoc,
   deleteMovieDoc,
   getMoviesDocs,
-} from "../utils/firebase/db.utils";
+} from "../../utils/firebase/db.utils";
+import MovieList from "./MovieList.component";
 
 const CreateMovies = () => {
   const [movieList, setMovieList] = useState<MovieDataType[]>([]);
@@ -15,7 +16,10 @@ const CreateMovies = () => {
   const getMovieList = async () => {
     try {
       const filteredData = await getMoviesDocs();
-      setMovieList(filteredData);
+      const sortedData = filteredData.sort(
+        (a, b) => a.releaseDate - b.releaseDate
+      );
+      setMovieList(sortedData);
     } catch (error) {
       console.error(error);
     }
@@ -48,13 +52,14 @@ const CreateMovies = () => {
 
   return (
     <>
-      <section>
+      <form>
         <div className="flex-between">
           <h2>Add New Movies</h2>
           <button onClick={addMovie} color="blue">
             Submit Movie
           </button>
         </div>
+
         <div className="input-area">
           {/* <label htmlFor="movieName">Name of the Movie:</label> */}
           <input
@@ -84,26 +89,11 @@ const CreateMovies = () => {
             <label htmlFor="receivedOscar">Received an Oscar</label>
           </div>
         </div>
-      </section>
+      </form>
 
       <section className="flex-col">
         {movieList.map((movie) => (
-          <div key={movie.id} className="flex-between">
-            <h3>
-              {movie?.releaseDate}:{" "}
-              <span
-                style={{
-                  color: `${
-                    movie.receivedAnOscar ? "var(--green-6)" : "var(--red-6)"
-                  }`,
-                }}
-              >
-                {movie?.title}
-              </span>
-            </h3>
-
-            <button onClick={() => deleteMovie(movie.id)}>Delete Movie</button>
-          </div>
+          <MovieList key={movie.id} movie={movie} deleteMovie={deleteMovie} />
         ))}
       </section>
     </>

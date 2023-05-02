@@ -17,3 +17,7 @@
 .textCenter {
   margin-block: auto 4px;
 }
+
+.textWhite {
+  color: white;
+}

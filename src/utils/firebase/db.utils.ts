@@ -27,10 +27,15 @@ const moviesCollectionRef = collection(db, "movies");
 export const getMoviesDocs = async (): Promise<MovieDataType[]> => {
   const data = await getDocs(moviesCollectionRef);
 
-  return data.docs.map((doc) => ({
-    ...doc.data(),
-    id: doc.id,
-  }));
+  return data.docs.map((doc) => {
+    const movieDocData = doc.data() as MovieData;
+    const movieDocId = doc.id;
+
+    return {
+      ...movieDocData,
+      id: movieDocId,
+    };
+  });
 };
 
 export const addMovieDoc = async (

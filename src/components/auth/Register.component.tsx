@@ -3,7 +3,8 @@ import { FieldErrors, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-import { auth } from "../utils/firebase/auth.utils";
+import { auth } from "../../utils/firebase/auth.utils";
+import styles from "./Auth.module.css";
 
 type FormDataType = {
   email: string;
@@ -45,8 +46,6 @@ const Register = () => {
 
   const { errors, isDirty, isSubmitting } = formState;
 
-  console.log(auth?.currentUser?.email);
-
   const onSubmitSuccess = async (data: FormDataType) => {
     await createUserWithEmailAndPassword(data.email, data.password);
     reset();
@@ -57,38 +56,47 @@ const Register = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmitSuccess, onSubmitError)}>
+    <form
+      onSubmit={handleSubmit(onSubmitSuccess, onSubmitError)}
+      className={styles.formContainer}
+    >
       <h2 className="text-center">Register</h2>
-      <div className="input_container">
+      <div className={styles.formField}>
         <label htmlFor="email">Email:</label>
-        <div>
+        <div className={styles.inputContainer}>
           <input type="email" {...register("email")} placeholder="Email" />
-          {errors.email && <span>{errors.email.message}</span>}
+          {errors.email && (
+            <span className={styles.errorText}>{errors.email.message}</span>
+          )}
         </div>
       </div>
 
-      <div className="input_container">
+      <div className={styles.formField}>
         <label htmlFor="password">Password:</label>
-        <div>
+        <div className={styles.inputContainer}>
           <input
             type="password"
             {...register("password")}
             placeholder="Password"
           />
-          {errors.password && <span>{errors.password.message}</span>}
+          {errors.password && (
+            <span className={styles.errorText}>{errors.password.message}</span>
+          )}
         </div>
       </div>
 
-      <div className="input_container">
-        <label htmlFor="confirmPassword">Confirm Password:</label>
-        <div>
+      <div className={styles.formField}>
+        <label htmlFor="confirmPassword">Password Again:</label>
+        <div className={styles.inputContainer}>
           <input
             type="password"
             {...register("confirmPassword")}
             placeholder="Confirm Password"
           />
           {errors.confirmPassword && (
-            <span>{errors.confirmPassword.message}</span>
+            <span className={styles.errorText}>
+              {errors.confirmPassword.message}
+            </span>
           )}
         </div>
       </div>
@@ -96,7 +104,7 @@ const Register = () => {
       <button type="submit" color="blue" disabled={!isDirty || isSubmitting}>
         {loading ? "Creating..." : "Create Account"}
       </button>
-      {error && <span>{error.message}</span>}
+      {error && <span className={styles.errorText}>{error.message}</span>}
     </form>
   );
 };

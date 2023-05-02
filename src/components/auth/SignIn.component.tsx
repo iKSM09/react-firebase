@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { auth, signInUser } from "../utils/firebase/auth.utils";
-import { FieldError, FieldErrors, useForm } from "react-hook-form";
+import { auth, signInUser } from "../../utils/firebase/auth.utils";
+import { FieldErrors, useForm } from "react-hook-form";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import styles from "./Auth.module.css";
 
 type SignInFormType = {
   email: string;
@@ -26,23 +26,31 @@ const SignIn = () => {
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
 
-  const { register, handleSubmit, formState, reset } = useForm<SignInFormType>({
-    mode: "onBlur",
-    defaultValues: {
-      email: "",
-      password: "",
-    },
-    resolver: zodResolver(schema),
-  });
+  const { register, handleSubmit, formState, reset, resetField } =
+    useForm<SignInFormType>({
+      mode: "onBlur",
+      defaultValues: {
+        email: "",
+        password: "",
+      },
+      resolver: zodResolver(schema),
+    });
 
-  const { errors, isValid, isDirty, isSubmitting } = formState;
-
-  console.log(auth?.currentUser?.email);
+  const { errors, isDirty, isSubmitting } = formState;
 
   const onSubmit = async (data: SignInFormType) => {
     console.log("onSubmit: ", data);
     await signInWithEmailAndPassword(data.email, data.password);
-    reset();
+
+    if (error) console.error("firebaseError: ", error);
+    if (error?.message.includes("wrong-password"))
+      resetField("password", {
+        keepError: true,
+        keepDirty: true,
+        keepTouched: true,
+      });
+
+    if (user) reset();
   };
 
   const onError = (errors: FieldErrors<SignInFormType>) => {
@@ -50,32 +58,41 @@ const SignIn = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit, onError)}>
-      <h2 className="text-center">Sign In</h2>
-      <div className="input_container">
+    <form
+      onSubmit={handleSubmit(onSubmit, onError)}
+      className={styles.formContainer}
+    >
+      <h2 className="">Sign In</h2>
+      <div className={styles.formField}>
         <label htmlFor="email">Email:</label>
-        <div>
+        <div className={styles.inputContainer}>
           <input type="email" {...register("email")} placeholder="Email" />
-          {errors.email && <span>{errors.email.message}</span>}
+          {errors.email && (
+            <span className={styles.errorText}>{errors.email.message}</span>
+          )}
         </div>
       </div>
 
-      <div className="input_container">
+      <div className={styles.formField}>
         <label htmlFor="password">Password:</label>
-        <div>
+        <div className={styles.inputContainer}>
           <input
             type="password"
             {...register("password")}
             placeholder="Password"
           />
-          {errors.password && <span>{errors.password.message}</span>}
+          {errors.password && (
+            <span className={styles.errorText}>{errors.password.message}</span>
+          )}
+          {error?.message.includes("wrong-password") && (
+            <span className={styles.errorText}>Password is incorrect.</span>
+          )}
         </div>
       </div>
 
       <button type="submit" color="blue" disabled={!isDirty || isSubmitting}>
         {loading ? "Signing in..." : "Sign In"}
       </button>
-      {error && <span>{error.message}</span>}
     </form>
   );
 };
