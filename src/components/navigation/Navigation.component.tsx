@@ -15,7 +15,7 @@ const Navigation = () => {
       <div className={style.flex}>
         <h3>
           Hello!{" "}
-          <span className={user ? style.textWhite : null}>
+          <span className={user ? style.textWhite : ""}>
             {user?.email?.split("@")[0] || "from React Firebase"}
           </span>
         </h3>
