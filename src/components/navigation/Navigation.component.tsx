@@ -1,22 +1,21 @@
-import React from "react";
 import {
   auth,
   signInWithGoogle,
   signOutUser,
 } from "../../utils/firebase/auth.utils";
 
-import { navBar, flex, textWhite } from "./Navigation.module.css";
+import style from "./Navigation.module.css";
 import { useAuthState } from "react-firebase-hooks/auth";
 
 const Navigation = () => {
   const [user] = useAuthState(auth);
 
   return (
-    <nav className={navBar}>
-      <div className={flex}>
+    <nav className={style.navBar}>
+      <div className={style.flex}>
         <h3>
           Hello!{" "}
-          <span className={user ? textWhite : null}>
+          <span className={user ? style.textWhite : null}>
             {user?.email?.split("@")[0] || "from React Firebase"}
           </span>
         </h3>

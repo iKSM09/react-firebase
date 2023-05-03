@@ -1,11 +1,11 @@
 import Register from "../../components/auth/Register.component";
 import SignIn from "../../components/auth/SignIn.component";
 
-import { authSection } from "./Auth.module.css";
+import style from "./Auth.module.css";
 
 const Auth = () => {
   return (
-    <section className={authSection}>
+    <section className={style.authSection}>
       <Register />
       <SignIn />
     </section>

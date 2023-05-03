@@ -1,4 +1,4 @@
-import { auth, signInUser } from "../../utils/firebase/auth.utils";
+import { auth } from "../../utils/firebase/auth.utils";
 import { FieldErrors, useForm } from "react-hook-form";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -25,6 +25,8 @@ const schema = z.object({
 const SignIn = () => {
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
+
+  console.log({ user });
 
   const { register, handleSubmit, formState, reset, resetField } =
     useForm<SignInFormType>({

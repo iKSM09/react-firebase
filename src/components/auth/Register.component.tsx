@@ -34,6 +34,8 @@ const Register = () => {
   const [createUserWithEmailAndPassword, user, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
 
+  console.log({ user });
+
   const { register, handleSubmit, formState, reset } = useForm<FormDataType>({
     mode: "onBlur",
     defaultValues: {
